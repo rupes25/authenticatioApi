@@ -1,6 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const authController = require("../controllers/auth.controller")
+const authMiddleware = require("../middlewares/auth.middleware")
 
 
 
@@ -12,9 +13,10 @@ router.post("/api/register",authController.registerUser)
 router.post("/api/login",authController.loginUser)
 
 //logout user
-router.post("/api/logout",authController.logoutUser)
+router.post("/api/logout",authMiddleware.checkLogIn ,authController.logoutUser)
 
 //current user
+router.get("/api/currentuser",authMiddleware.checkLogIn,authController.getCurrentUser)
 
 
 
